@@ -41,7 +41,7 @@ As we can see Webpack works not just as a module manager but as a generic build 
 <!-- navigation -->
 [home]: ../README.md
 [back]: ../README.md
-[next]: #
+[next]: install.md
 
 <!-- links -->
 [1]: http://webpack.github.io/
