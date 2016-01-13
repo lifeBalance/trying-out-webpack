@@ -32,7 +32,7 @@ Apart from dealing with modules, **Webpack** also helps with other tasks such as
 * Transpilation of several languages (Coffeescript, TypeScript, ES6) to JavaScript.
 * Linting errors.
 
-As we can see Webpack works not just as a module manager but as a generic build process tool, in the line of task runners such as Grunt or Gulp.
+As we can see Webpack works not just as a module manager but as a generic build process tool, in the line of task runners such as [Grunt][5] or [Gulp][6].
 
 
 ---
@@ -48,3 +48,5 @@ As we can see Webpack works not just as a module manager but as a generic build 
 [2]: http://www.commonjs.org/
 [3]: http://requirejs.org/
 [4]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
+[5]: http://gruntjs.com/
+[6]: http://gulpjs.com/

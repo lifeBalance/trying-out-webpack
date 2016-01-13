@@ -14,7 +14,7 @@ Notes and small sample project using [Webpack][1]. Before I opted for Webpack I 
 <!-- navigation -->
 [home]: #
 [back]: #
-[next]: README/setup.md
+[next]: README/what-is.md
 
 
 <!-- links -->
