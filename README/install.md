@@ -21,14 +21,14 @@ Now, with a `package.json` in place, let's install Webpack **locally** and add i
 $ npm install webpack --save-dev
 ```
 
-This way we'll be using the local version of webpack and not the single global one, what allows for using a different version of webpack in each project.
+This way we'll be using the local version of webpack and not the single global one, what allows for using a different version of webpack in each project. As a matter of fact, it's not necessary to install webpack **globally**, we can do it just locally and add the following line to the `scripts` section of your `package.json` file:
+```js
+"build": "webpack"
+```
 
-> As a matter of fact, it's not necessary to install webpack **globally**, we can do it just locally with the minor inconvenience of having to precede the command with `npm run` when we run webpack from the command-line. For this to work, add the following line to the `scripts` section of your `package.json` file:
+Now we can run `npm run build` everytime we wanted to run the `webpack` command. This is specially useful when we want to add some command-line options to `webpack`, and alias them to something.
 
-> ```js
-> "webpack": "webpack"
-> ```
-
+### Adding some files
 Let's create one basic **HTML file** with this content:
 
 ```html

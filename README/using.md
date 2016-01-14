@@ -22,7 +22,7 @@ The set of options we can pass to `webpack` for a given build can become pretty 
 
 > A lot of the options we can use in the command line map to a configuration option.
 
-A configuration file is basically a [CommonJS][3] module that we have to export to make it work. For example:
+We don’t need to write pure JSON into the **configuration file**, it's just a JavaScript object that we export as a [CommonJS][3] module. For example:
 
 ```js
 module.exports = {
@@ -70,6 +70,19 @@ If we point our browser to http://localhost:8080/webpack-dev-server/ we should h
 > The livereload only works for our JavaScript files, not HTML or other stuff.
 
 If we want to get rid of the **App ready** bar, we just have to point our browser to http://localhost:8080/, but the **livereloading** will be gone. To fix that we just have to start the server with the `--inline` option. (We cannot specify it in our configuration file)
+
+At this point could be a good idea to add a couple of new lines to the `scripts` section of our `package.json` file:
+
+```json
+"serve": "webpack-dev-server",
+"inline": "webpack-dev-server --inline"
+```
+
+We can run any of these preceding them with `npm run`, for example to start the server with the `--inline` option we would run:
+
+```
+$ npm run inline
+```
 
 The dev server uses Webpack’s **watch mode**. It also prevents Webpack from emitting the resulting files to disk. Instead it keeps and serves the resulting files from memory. This means that you will not see the `webpack-dev-server` build in `bundle.js`, to see and run the build, you must still run the `webpack` command.
 
