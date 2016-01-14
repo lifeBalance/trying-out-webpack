@@ -118,7 +118,7 @@ Refresh the page in the browser and try to access the variable `message` again. 
 <!-- navigation -->
 [home]: ../README.md
 [back]: what-is.md
-[next]: #
+[next]: using.md
 
 <!-- links -->
 [1]: http://webpack.github.io/

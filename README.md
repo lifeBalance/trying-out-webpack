@@ -7,6 +7,7 @@ Notes and small sample project using [Webpack][1]. Before I opted for Webpack I 
 ## Contents
 * [What is Webpack?][l1]
 * [Installing Webpack and setting up a project][l2]
+* [Using Webpack: Configuration file and the Webpack Development Server][l3]
 
 
 ---
@@ -28,3 +29,4 @@ Notes and small sample project using [Webpack][1]. Before I opted for Webpack I 
 <!-- menu -->
 [l1]: README/what-is.md
 [l2]: README/install.md
+[l3]: README/using.md
