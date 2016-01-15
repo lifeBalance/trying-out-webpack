@@ -132,7 +132,7 @@ We're going to create some subdirectories (`app`, `build` and `public`) at the r
 
 * We have to adjust Webpack so that during **development** it outputs the results of our builds in the `build` folder, which by the way it's going to be added to our `.gitignore`.
 
-* In the `public` folder we're going to put just the `index.html`. When the time comes to build for **production**, an assets folder will be generated with subdirectories for the different type of assets that our application is gonna need. At the moment, if we build it will have just a `js` folder for our `bundle.js`.
+* In the `public` folder we're going to put just the `index.html`. When the time comes to build for **production**, an `assets` folder will be generated with subdirectories for the different type of assets that our application is gonna need. At the moment, if we build it will have just a `js` folder for our `bundle.js`.
 
 Since we are going to be building our files in two different places:
 
@@ -149,13 +149,13 @@ module.exports = {
   entry: './entry',
   output: {
     path: path.resolve('build/js'),
-    filename: 'bundle.js',
-    publicPath: path.resolve('/public/assets/js')
+    publicPath: '/public/assets/js/',
+    filename: 'bundle.js'
   },
   devServer: {
     contentBase: 'public'
   }
-}
+};
 ```
 
 * First of all we are importing the `path` module ([Node.js core][7]), so we can use the `resolve` method. This method takes in several strings and returns an **absolute path**.
