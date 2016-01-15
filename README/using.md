@@ -37,15 +37,23 @@ module.exports = {
 >
 > `ERROR in Entry module not found: Error: Cannot resolve module 'entry.js'`
 
-Once we have a configuration file in place all we have to do to run Webpack is type:
+The settings we're using above are equivalent to the options we passed to the command we run the first time, we are just specifying an **entry point** and an **output file**. But it's better to set these options in a file so all we have to do to run Webpack is type:
+```
+$ webpack
+```
+
+And hit `return`, which is much more convenient that having to remember the files involved and whatever options we were using.
+
+## Watching mode
+Passing the `--watch` option in the command line starts `webpack` in **watch mode**, so every time we make changes to our code base, Webpack will automatically rerun the build an update the output file:
 ```
 $ webpack --watch
 ```
 
-And hit `return`, which is much more convenient that having to remember the files involved and whatever options we were using. The configuration we're using is equivalent to the command we run the first time. Notice the `--watch` option we are passing in the command line which is gonna start `webpack` in **watch mode** so every time we make changes to our code base, Webpack will automatically rerun the build an update the output file. There's an equivalent property (`watch: true`) that we can add to our configuration file if we wanted to.
+There's an equivalent property (`watch: true`) that we can add to our configuration file if we wanted to.
 
 ## Running the Webpack Dev Server
-The process described in the previous sections works fine for the most basic needs, but one of its inconveniences is that we have to open our HTML files using the **file protocol**, which due to browser security issues, it's gonna make impossible working with front-end frameworks or doing anything useful.
+The process described in the previous section works fine for the most basic needs, but one of its inconveniences is that we have to open our HTML files using the **file protocol**, which due to browser security issues, it's gonna make impossible working with front-end frameworks or doing anything useful.
 
 So we need to serve our app using the **HTTP protocol**. Even though we could use our own server, the **Webpack** team has created a small server made with [Express][4] and called [webpack-dev-server][5]. This server uses a special [webpack-dev-middleware][6] to serve the generated webpack bundle, and emits information about the compilation state to the client, which reacts to those events.
 
@@ -86,6 +94,85 @@ $ npm run inline
 
 The dev server uses Webpack’s **watch mode**. It also prevents Webpack from emitting the resulting files to disk. Instead it keeps and serves the resulting files from memory. This means that you will not see the `webpack-dev-server` build in `bundle.js`, to see and run the build, you must still run the `webpack` command.
 
+## Organizing our project
+So far we have all our files sitting at the root of our project, which is fine at this point since the project is really small. But once it starts growing, having everything in the same place is going to become a mess. This is what we have so far:
+
+```
+.
+├── index.html
+├── entry.js
+├── second.js
+├── third.js
+├── bundle.js
+├── webpack.config.js
+├── node_modules/
+└── package.json
+```
+
+We're going to create some subdirectories (`app`, `build` and `public`) at the root of our project to help organize everything, like this:
+```
+.
+├── app
+│   ├── entry.js
+│   ├── second.js
+│   └── third.js
+├── build
+│   └── js
+│       └── bundle.js
+├── public
+│   ├── index.html
+│   └── assets/
+│       └── js/
+├── webpack.config.js
+├── package.json
+└── node_modules/
+```
+
+* In the `app` folder we've put our JavaScript source code.
+
+* We have to adjust Webpack so that during **development** it outputs the results of our builds in the `build` folder, which by the way it's going to be added to our `.gitignore`.
+
+* In the `public` folder we're going to put just the `index.html`. When the time comes to build for **production**, an assets folder will be generated with subdirectories for the different type of assets that our application is gonna need. At the moment, if we build it will have just a `js` folder for our `bundle.js`.
+
+Since we are going to be building our files in two different places:
+
+* In the `build` folder when **developing**.
+* In the `public/assets` directory when we are ready for **production**.
+
+The question is, where do we point our HTML file? The answer is to always point to the **production** directory and then, use some trickery in our configuration file so we don't have to change the `<script>` tag when we are in **development**. Let's see how:
+
+```js
+var path = require("path");
+
+module.exports = {
+  context: path.resolve('app'),
+  entry: './entry',
+  output: {
+    path: path.resolve('build/js'),
+    filename: 'bundle.js',
+    publicPath: path.resolve('/public/assets/js')
+  },
+  devServer: {
+    contentBase: 'public'
+  }
+}
+```
+
+* First of all we are importing the `path` module ([Node.js core][7]), so we can use the `resolve` method. This method takes in several strings and returns an **absolute path**.
+
+* The `context` property sets the base directory (absolute path!) for resolving the `entry` option. In our project we are keeping all the source files in the `app` folder.
+
+* The `output.path` is the absolute path to the output directory and `filename` is self explanatory. Only when we run the `webpack` command using the **development** configuration (default), the files will be generated in this location.
+
+* The `output.publicPath` is the interesting part here, it specifies the **public URL address** of the output files when referenced in a browser. So when we are in **development**, every request for the build assets that is received by the `webpack-dev-server` is resolved to this location, even though the files are not actually served from there; as we mentioned before, the `webpack-dev-server` serves the build virtually, from memory.
+
+* After the initial configuration we have added another property named `devServer.contentBase` so when someone requests `index.html` from the root, it's gonna be served from the `public` directory, in this case where the file actually lives.
+
+Let's run the server to check everything is working properly:
+```
+$ npm run serve
+```
+
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
 
@@ -101,3 +188,4 @@ The dev server uses Webpack’s **watch mode**. It also prevents Webpack from em
 [4]: http://expressjs.com/
 [5]: https://webpack.github.io/docs/webpack-dev-server.html
 [6]: https://webpack.github.io/docs/webpack-dev-middleware.html
+[7]: https://nodejs.org/api/path.html
