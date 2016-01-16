@@ -179,7 +179,7 @@ $ npm run serve
 <!-- navigation -->
 [home]: ../README.md
 [back]: install.md
-[next]: #
+[next]: loaders.md
 
 <!-- links -->
 [1]: http://webpack.github.io/
