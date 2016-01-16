@@ -1,5 +1,5 @@
 # Using Webpack
-Now that we know how to install and setup a project, as well as how to run it from the command line,  in this section we're gonna start learning more productive ways to work with [Webpack][1].
+Now that we know how to install and setup a project, as well as how to run [Webpack][1] from the command line,  in this section we're gonna start learning more productive ways to work with it.
 
 We have available a number of options to use with the `webpack` in the command line, to see a full list run:
 ```
@@ -12,10 +12,10 @@ In the last section we used the command in its most basic form:
 $ webpack <entry> <output>
 ```
 
-* Where `<entry>` is a file (the entry point of our application) or a request string. We can pass multiple entries.
+* Where `<entry>` is a file (the entry point of our application) or a request string (We can pass multiple entries).
 * And `<output>` is the output file.
 
-All of the arguments we can use in the command line, map to **configuration options** that we can use in a configuration file. [Click here][2] for a detailed list of options.
+Almost all of the arguments we can use in the command line, map to **configuration options** that we can use in a configuration file. [Click here][2] for a detailed list of options.
 
 ## Adding a configuration file
 The set of options we can pass to `webpack` for a given build can become pretty long, to the point that is not viable to specify them in the command line. That's why is necessary to write them down in a configuration file. This file has to be named `webpack.config.js` and be placed in the same directory where we run the command. This way our build will run with all the configuration settings specified in the file.
@@ -42,7 +42,7 @@ The settings we're using above are equivalent to the options we passed to the co
 $ webpack
 ```
 
-And hit `return`, which is much more convenient that having to remember the files involved and whatever options we were using.
+And hit `return`, which is much more convenient that having to remember the files involved and whatever options we were using. This file is going to be default configuration and the one we're gonna use in **development**, later we'll se how to create another one for **production**.
 
 ## Watching mode
 Passing the `--watch` option in the command line starts `webpack` in **watch mode**, so every time we make changes to our code base, Webpack will automatically rerun the build an update the output file:
@@ -73,11 +73,11 @@ Version: webpack 1.12.10
 Time: 68ms
 ```
 
-If we point our browser to http://localhost:8080/webpack-dev-server/ we should have our app running, with a sort of status bar at the top which reads **App ready**. When working this way, our app is served in an **iframe** element, right under the mentioned status bar. One awesome built-in feature of the server running this way is **hot-loading**: for every change made to our entry point, the browser refreshes automatically.
+If we point our browser to [http://localhost:8080/webpack-dev-server/][8] we should have our app running, with a sort of status bar at the top which reads **App ready**. When working this way, our app is served in an **iframe** element, right under the mentioned status bar. One awesome built-in feature of the server running this way is **hot-loading**: for every change made to our entry point, the browser refreshes automatically.
 
 > The livereload only works for our JavaScript files, not HTML or other stuff.
 
-If we want to get rid of the **App ready** bar, we just have to point our browser to http://localhost:8080/, but the **livereloading** will be gone. To fix that we just have to start the server with the `--inline` option. (We cannot specify it in our configuration file)
+If we want to get rid of the **App ready** bar, we just have to point our browser to [http://localhost:8080/][9], but the **livereloading** will be gone. To fix that we just have to start the server with the `--inline` option. (We cannot specify it in our configuration file)
 
 At this point could be a good idea to add a couple of new lines to the `scripts` section of our `package.json` file:
 
@@ -92,7 +92,7 @@ We can run any of these preceding them with `npm run`, for example to start the 
 $ npm run inline
 ```
 
-The dev server uses Webpack’s **watch mode**. It also prevents Webpack from emitting the resulting files to disk. Instead it keeps and serves the resulting files from memory. This means that you will not see the `webpack-dev-server` build in `bundle.js`, to see and run the build, you must still run the `webpack` command.
+The dev server uses Webpack’s **watch mode**. It also prevents Webpack from emitting the resulting files to disk. Instead, it keeps and serves the resulting files from memory. This means that you will not see the `webpack-dev-server` build in `bundle.js`; to see and run the build, you must still run the `webpack` command.
 
 ## Organizing our project
 So far we have all our files sitting at the root of our project, which is fine at this point since the project is really small. But once it starts growing, having everything in the same place is going to become a mess. This is what we have so far:
@@ -110,7 +110,7 @@ So far we have all our files sitting at the root of our project, which is fine a
 ```
 
 We're going to create some subdirectories (`app`, `build` and `public`) at the root of our project to help organize everything, like this:
-```
+```bash
 .
 ├── app
 │   ├── entry.js
@@ -121,7 +121,7 @@ We're going to create some subdirectories (`app`, `build` and `public`) at the r
 │       └── bundle.js
 ├── public
 │   ├── index.html
-│   └── assets/
+│   └── assets/   # <= This folder will be generated when in production.
 │       └── js/
 ├── webpack.config.js
 ├── package.json
@@ -130,14 +130,14 @@ We're going to create some subdirectories (`app`, `build` and `public`) at the r
 
 * In the `app` folder we've put our JavaScript source code.
 
-* We have to adjust Webpack so that during **development** it outputs the results of our builds in the `build` folder, which by the way it's going to be added to our `.gitignore`.
+* We have to set up Webpack so that during **development**, it outputs the results of our builds in the `build` folder, which by the way it's going to be added to our `.gitignore`.
 
-* In the `public` folder we're going to put just the `index.html`. When the time comes to build for **production**, an `assets` folder will be generated with subdirectories for the different type of assets that our application is gonna need. At the moment, if we build it will have just a `js` folder for our `bundle.js`.
+* In the `public` folder we're going to put just the `index.html`. When the time comes to build for **production**, an `assets` folder will be generated with subdirectories for the different type of assets that our application is gonna need. It's necessary a second configuration file for production, where we will specify this folder in the `output` property.
 
 Since we are going to be building our files in two different places:
 
 * In the `build` folder when **developing**.
-* In the `public/assets` directory when we are ready for **production**.
+* And in the `public/assets` directory when we are ready for **production**.
 
 The question is, where do we point our HTML file? The answer is to always point to the **production** directory and then, use some trickery in our configuration file so we don't have to change the `<script>` tag when we are in **development**. Let's see how:
 
@@ -162,9 +162,9 @@ module.exports = {
 
 * The `context` property sets the base directory (absolute path!) for resolving the `entry` option. In our project we are keeping all the source files in the `app` folder.
 
-* The `output.path` is the absolute path to the output directory and `filename` is self explanatory. Only when we run the `webpack` command using the **development** configuration (default), the files will be generated in this location.
+* The `output.path` is the absolute path to the output directory and `filename` is self explanatory. When we run the `webpack` command, the files will be generated in this location.
 
-* The `output.publicPath` is the interesting part here, it specifies the **public URL address** of the output files when referenced in a browser. So when we are in **development**, every request for the build assets that is received by the `webpack-dev-server` is resolved to this location, even though the files are not actually served from there; as we mentioned before, the `webpack-dev-server` serves the build virtually, from memory.
+* The `output.publicPath` is the interesting part here, it specifies the **public URL address**  that we have to use in the browser to access the output files. So when we are in **development**, we are making the request for the build assets to this URL, but the `webpack-dev-server` is actually gonna be serving them from memory. Even though there's an option for making the server to actually serve the files from the `build` directory, the server is still gonna be serving them as if they were located at the public URL address.
 
 * After the initial configuration we have added another property named `devServer.contentBase` so when someone requests `index.html` from the root, it's gonna be served from the `public` directory, in this case where the file actually lives.
 
@@ -189,3 +189,5 @@ $ npm run serve
 [5]: https://webpack.github.io/docs/webpack-dev-server.html
 [6]: https://webpack.github.io/docs/webpack-dev-middleware.html
 [7]: https://nodejs.org/api/path.html
+[8]: http://localhost:8080/webpack-dev-server/
+[9]: http://localhost:8080/

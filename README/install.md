@@ -1,5 +1,5 @@
 # Installing Webpack
-Since [Webpack][1] is an [npm][2] package we can install it **globally** and have it available as a command in any of our projects:
+Since [Webpack][1] is distributed as an [npm][2] package, we can install it **globally** and have it available as a command in any of our projects running:
 
 ```
 $ npm install webpack -g
@@ -21,7 +21,7 @@ Now, with a `package.json` in place, let's install Webpack **locally** and add i
 $ npm install webpack --save-dev
 ```
 
-This way we'll be using the local version of webpack and not the single global one, what allows for using a different version of webpack in each project. As a matter of fact, it's not necessary to install webpack **globally**, we can do it just locally and add the following line to the `scripts` section of your `package.json` file:
+This way we'll be using the local version of webpack and not the single global one, what allows for using a different version of webpack in each of our projects. As a matter of fact, it's not necessary to install webpack **globally**, we can do it just locally and add the following line to the `scripts` section of your `package.json` file:
 ```js
 "build": "webpack"
 ```
@@ -74,16 +74,16 @@ This command takes 2 arguments:
 * An **input file**, in this case `entry.js`
 * An **output file**, which is typically named `bundle.js`
 
-From the output we can see several things: a hash number, the webpack version and more importantly that a new asset named `bundle.js` with a size of 1.42 kB has been generated, and that the process took 59ms.
+From the output we can see several things: a **hash** number, the webpack **version** and more importantly that a new asset named `bundle.js` with a **size** of 1.42 kB has been generated, and that the process took 59ms.
 
 ### Adding a second script
-So far we're not doing anything remarkable with webpack. Let's add a second JavaScript (let's call it `second.js`) file and export a module using [CommonJS][3] syntax:
+So far we're not doing anything remarkable with webpack. Let's add a second JavaScript file (named `second.js`) and export a module using [CommonJS][3] syntax:
 
 ```js
 module.exports = "I'm in second.js";
 ```
 
-Now let's import this file into the entry point or our application (`entry.js`):
+Now let's import this file from the entry point or our application (`entry.js`):
 
 ```js
 var message = require('./second');
@@ -97,9 +97,9 @@ We'll have to build again:
 $ npm run webpack entry.js bundle.js
 ```
 
-Open `index.html` in your browser and open the console too, the two messages should appear. Note that if we try to access the variable `message` in the browser console, we get an `Uncaught ReferenceError: message is not defined`, this is because using modules variables are not added to the **global namespace**.
+Open `index.html` in your browser and from the developer tools open the JavaScript console, the two messages should appear. Note that if we try to access the variable `message` in the browser console, we get an `Uncaught ReferenceError: message is not defined`, this is because using modules, variables are not added to the **global namespace**.
 
-If we had used script tags to import our dependencies to the page, we would have ended with `message` polluting the global namespace, and thus accessible in the console by just typing `message`. You can try this out creating a file named `third.js` and defining inside the variable:
+If we had used a script tags to import this dependency, we would have ended with `message` polluting the global namespace, and thus accessible in the console by just typing `message`. You can try this out creating a file named `third.js` and defining inside the variable:
 
 ```js
 var message = "I'm in third.js";
@@ -110,7 +110,7 @@ Add the following script tag to your `index.html` file:
 <script type="text/javascript" src="third.js" charset="utf-8"></script>
 ```
 
-Refresh the page in the browser and try to access the variable `message` again. All the stuff at the top-level of a dependency added using `script` tags, ends up in the global namespace. A module system avoids polluting the global environment.
+Refresh the page in the browser and try to access the variable `message` again. All the stuff defined at the top-level of a script added using a `script` tag, ends up in the global namespace. A module system avoids polluting the global environment.
 
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]

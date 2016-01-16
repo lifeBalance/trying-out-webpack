@@ -10,7 +10,7 @@ So instead of having to deal with dependencies and the order in which they are r
 <script src="libraryB.js"></script>
 ```
 
-Webpack takes care of it for us. In big projects the list of dependencies can get really long and difficult to manage. Using a module system we deal with dependencies inside each file reducing maintenance costs of large JavaScript apps.
+In big projects the list of dependencies can get really long and difficult to manage. By using a module system we deal with dependencies inside each file, reducing maintenance costs of large JavaScript apps.
 
 ## Supported module systems
 **Webpack** works fine with the three major module systems:
@@ -19,7 +19,7 @@ Webpack takes care of it for us. In big projects the list of dependencies can ge
 * [RequireJS][3], natively.
 * [ES6 modules][4], using a loader.
 
-Using any of these systems we just have to worry about the dependencies that the code inside a module (generally a separate file) has, and list them at the top of the file.
+Using any of these systems we just have to worry about the dependencies that the code inside a module (generally a separate file) has, and list them at the top of the file. Webpack takes care of rest.
 
 ## Other useful stuff
 Apart from dealing with modules, **Webpack** also helps with other tasks such as:
@@ -32,7 +32,7 @@ Apart from dealing with modules, **Webpack** also helps with other tasks such as
 * Transpilation of several languages (Coffeescript, TypeScript, ES6) to JavaScript.
 * Linting errors.
 
-As we can see Webpack works not just as a module manager but as a generic build process tool, in the line of task runners such as [Grunt][5] or [Gulp][6].
+As we can see Webpack works not just as a module manager, but as a generic build process tool, in the same line of task runners such as [Grunt][5] or [Gulp][6].
 
 
 ---
