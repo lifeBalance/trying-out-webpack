@@ -36,10 +36,13 @@ module: {
   ]
 }
 ```
+* First of all we create a `module` object to hold the loaders. This property will contain the options affecting modules, which is what loaders are.
+* The `loaders` key contains an **array of loaders**, where each individual loader goes in a separate object.
+* Each loader object will specify its own properties, the most important ones being:
 
-* The `test` property takes a **regular expression** that refers to the file extension the loader is gonna be acting on.
-* The `exclude` property also takes a **regex** to exclude certain files or directories from the reach of the loader.
-* The `loader` property deserves separate mention.
+  * The `test` property takes a **regular expression** that refers to the file extension of the files the loader is gonna be acting on.
+  * The `exclude` property also takes a **regex** to exclude certain files or directories from the reach of the loader.
+  * The `loader` key takes a **string** which refers to the loader itself; we can refer to the loader using its full name as well as its shorthand name. This property deserves separate mention.
 
 ### The loader string
 We must mention a few things about this string:
