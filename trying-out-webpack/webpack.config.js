@@ -17,6 +17,13 @@ module.exports = {
     contentBase: 'public'
   },
   module: {
+    preLoaders: [
+      {
+        test: /\.(js|es6)$/,
+        exclude: /node_modules/,
+        loader: 'jshint-loader'
+      }
+    ],
     loaders: [
       {
         test: /\.css$/,
@@ -27,8 +34,19 @@ module.exports = {
         test: /\.scss$/,
         exclude: /node_modules/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!sass-loader')
+      },
+      {
+        test: /\.es6$/,
+        exclude: /node_modules/,
+        loader: "babel-loader",
+        query: {
+          presets: ['es2015']
+        }
       }
     ]
+  },
+  resolve: {
+    extensions: ['', '.js', '.es6']
   },
   postcss: function () {
     return [autoprefixer];

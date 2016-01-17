@@ -8,7 +8,8 @@ Notes and small sample project using [Webpack][1]. Before I opted for Webpack I 
 * [What is Webpack?][l1]
 * [Installing Webpack and setting up a project][l2]
 * [Using Webpack: Configuration file and the Webpack Development Server][l3]
-* [Loaders. Adding styles][l4]
+* [Loaders: Adding styles][l4]
+* [Loaders: Writing ES6 and JavaScript linting][l5]
 
 ---
 [:arrow_backward:][back] ║ [:house:][home] ║ [:arrow_forward:][next]
@@ -31,3 +32,4 @@ Notes and small sample project using [Webpack][1]. Before I opted for Webpack I 
 [l2]: README/install.md
 [l3]: README/using.md
 [l4]: README/loaders.md
+[l5]: README/loaders2.md

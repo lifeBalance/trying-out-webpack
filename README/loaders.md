@@ -235,7 +235,7 @@ And also we need to update the `<script>` tag that points to our `bundle.js`:
 <!-- navigation -->
 [home]: ../README.md
 [back]: using.md
-[next]: #
+[next]: loaders2.md
 
 <!-- links -->
 [1]: https://webpack.github.io/docs/list-of-loaders.html
